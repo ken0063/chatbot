@@ -16,7 +16,8 @@ type Input = {
 const ChatInput: FC<Props> = ({ className, ...props }) => {
   const { register, getValues } = useForm<Input>();
 
-  const { mutate, isLoading, error, data } = useMutation({
+  const { mutate } = useMutation({
+    mutationKey: ["sendMessage"],
     mutationFn: async (payload: Message) => {
       const res = await fetch("/api/message", {
         method: "POST",
@@ -34,9 +35,9 @@ const ChatInput: FC<Props> = ({ className, ...props }) => {
       let done = false;
       while (!done) {
         const { value, done: doneReading } = await reader.read();
-
         done = doneReading;
         const chunckValue = decoder?.decode(value);
+        console.log({ chunckValue });
       }
     },
   });
